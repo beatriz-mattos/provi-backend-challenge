@@ -33,20 +33,20 @@ export class UserController {
         await BaseDatabase.destroyConnection();
     };
 
-    // async login(req: Request, res: Response) {
-    //     try {
-    //         const { email, password } = req.body;
+    async login(req: Request, res: Response) {
+        try {
+            const { email, password } = req.body;
 
-    //         const input: SignupAndLoginInputDTO = { email, password };
+            const input: SignupAndLoginInputDTO = { email, password };
 
-    //         const token = await UserController.UserBusiness.login(input);
+            const token = await UserController.UserBusiness.login(input);
 
-    //         res.status(200).send(token);
+            res.status(200).send(token);
 
-    //     } catch (err) {
-    //         res.status(err.code || 400).send({ message: err.message })
-    //     };
+        } catch (err) {
+            res.status(err.code || 400).send({ message: err.message })
+        };
 
-    //     await BaseDatabase.destroyConnection();
-    // };
+        await BaseDatabase.destroyConnection();
+    };
 };

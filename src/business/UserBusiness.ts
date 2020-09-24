@@ -41,27 +41,27 @@ export class UserBusiness {
         return { token };
     };
 
-    // public async login(input: SignupAndLoginInputDTO) {
-    //     const { email, password } = input;
+    public async login(input: SignupAndLoginInputDTO) {
+        const { email, password } = input;
 
-    //     if (!email || !password) {
-    //         throw new InvalidParameterError("Missing some input")
-    //     };
+        if (!email || !password) {
+            throw new InvalidParameterError("Missing some input")
+        };
 
-    //     const user = await this.userDatabase.getUserByEmail(email);
+        const user = await this.userDatabase.getUserByEmail(email);
 
-    //     if (!user) {
-    //         throw new NotFoundError("User not found")
-    //     };
+        if (!user) {
+            throw new NotFoundError("User not found")
+        };
 
-    //     const isPasswordCorrect = await this.hashManager.compare(password, user.getPassword());
+        const isPasswordCorrect = await this.hashManager.compare(password, user.getPassword());
 
-    //     if (!isPasswordCorrect) {
-    //         throw new InvalidParameterError("Invalid password")
-    //     };
+        if (!isPasswordCorrect) {
+            throw new InvalidParameterError("Invalid password")
+        };
 
-    //     const token = this.authenticator.generateToken({ id: user.getId() });
+        const token = this.authenticator.generateToken({ id: user.getId() });
 
-    //     return { token };
-    // };
+        return { token };
+    };
 };
