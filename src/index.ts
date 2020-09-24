@@ -1,6 +1,7 @@
 import { AddressInfo } from "net";
 import express from "express";
 import dotenv from "dotenv";
+import { userRouter } from "./routes/UserRouter";
 
 if (process.env.NODE_ENV !== "serverless") {
     dotenv.config();
@@ -9,6 +10,8 @@ if (process.env.NODE_ENV !== "serverless") {
 export const app = express();
 
 app.use(express.json());
+
+app.use("/user", userRouter);
 
 export default app;
 
