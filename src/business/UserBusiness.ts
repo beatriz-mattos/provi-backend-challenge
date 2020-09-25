@@ -1,4 +1,4 @@
-import { User, SignupInputDTO } from './../model/User';
+import { User, RegisterInputDTO } from './../model/User';
 import { InvalidParameterError } from "../error/InvalidParameterError";
 import { NotFoundError } from './../error/NotFoundError';
 import { Authenticator } from "../services/Authenticator";
@@ -15,7 +15,7 @@ export class UserBusiness {
         private idGenerator: IdGenerator
     ) {};
 
-    public async signup(input: SignupInputDTO) {
+    public async register(input: RegisterInputDTO) {
         const { email, password } = input;
 
         if (!email || !password) {

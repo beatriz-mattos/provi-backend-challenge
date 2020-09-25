@@ -51,7 +51,7 @@ export class User {
     };
 };
 
-export interface SignupInputDTO {
+export interface RegisterInputDTO {
     email: string,
     password: string
 };

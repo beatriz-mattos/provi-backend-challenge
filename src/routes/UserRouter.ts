@@ -5,7 +5,7 @@ export const userRouter = express.Router();
 
 const userController = new UserController();
 
-userRouter.post("/signup", userController.signup);
+userRouter.post("/register", userController.register);
 //userRouter.post("/login", userController.login);
 userRouter.post("/cpf", userController.addCpf);
 // userRouter.post("/full-name", userController.addFullName);

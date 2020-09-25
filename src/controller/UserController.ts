@@ -1,4 +1,4 @@
-import { SignupInputDTO, CpfInputDTO } from './../model/User';
+import { RegisterInputDTO, CpfInputDTO } from './../model/User';
 import { Authenticator } from '../services/Authenticator';
 import { UserBusiness } from './../business/UserBusiness';
 import { HashManager } from './../services/HashManager';
@@ -15,14 +15,14 @@ export class UserController {
         new IdGenerator()
     );
 
-    async signup(req: Request, res: Response) {
+    async register(req: Request, res: Response) {
         try {
-            const input: SignupInputDTO = {
+            const input: RegisterInputDTO = {
                 email: req.body.email,
                 password: req.body.password
             };
             
-            const response = await UserController.UserBusiness.signup(input);
+            const response = await UserController.UserBusiness.register(input);
 
             res.status(200).send(response);
 
