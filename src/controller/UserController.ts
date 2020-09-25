@@ -1,4 +1,4 @@
-import { SignupAndLoginInputDTO } from './../model/User';
+import { SignupInputDTO, CpfInputDTO } from './../model/User';
 import { Authenticator } from '../services/Authenticator';
 import { UserBusiness } from './../business/UserBusiness';
 import { HashManager } from './../services/HashManager';
@@ -17,7 +17,7 @@ export class UserController {
 
     async signup(req: Request, res: Response) {
         try {
-            const input: SignupAndLoginInputDTO = {
+            const input: SignupInputDTO = {
                 email: req.body.email,
                 password: req.body.password
             };
@@ -33,16 +33,30 @@ export class UserController {
         await BaseDatabase.destroyConnection();
     };
 
-    async login(req: Request, res: Response) {
+    // async login(req: Request, res: Response) {
+    //     try {
+    //         const { email, password } = req.body;
+
+    //         const input: SignupAndLoginInputDTO = { email, password };
+
+    //         const token = await UserController.UserBusiness.login(input);
+
+    //         res.status(200).send(token);
+
+    //     } catch (err) {
+    //         res.status(err.code || 400).send({ message: err.message })
+    //     };
+
+    //     await BaseDatabase.destroyConnection();
+    // };
+
+    async addCpf(req: Request, res: Response) {
         try {
-            const { email, password } = req.body;
+            const { token, cpf } = req.body;
 
-            const input: SignupAndLoginInputDTO = { email, password };
+            const input: CpfInputDTO = { token, cpf };
 
-            const token = await UserController.UserBusiness.login(input);
-
-            res.status(200).send(token);
-
+            
         } catch (err) {
             res.status(err.code || 400).send({ message: err.message })
         };
