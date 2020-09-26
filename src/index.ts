@@ -10,7 +10,6 @@ if (process.env.NODE_ENV !== "serverless") {
 export const app = express();
 
 app.use(express.json());
-
 app.use("/user", userRouter);
 
 export default app;
