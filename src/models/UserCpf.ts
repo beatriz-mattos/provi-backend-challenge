@@ -7,12 +7,12 @@ export class UserCpf {
     public getId = () => this.id;
     public getCpf = () => this.cpf;
 
-    public static toCpfModel(userCpf?: any): UserCpf | undefined {
+    public static toCpfModel(user?: any): UserCpf | undefined {
         return (
-            userCpf &&
+            user &&
             new UserCpf(
-                userCpf.id,
-                userCpf.cpf
+                user.id,
+                user.cpf
             )
         )
     };

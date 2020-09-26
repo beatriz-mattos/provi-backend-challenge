@@ -3,9 +3,9 @@ import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/IdGenerator";
 import { ConflictError } from '../error/ConflictError';
-import { RegisterInputDTO, UserRegister } from "../model/UserRegister";
+import { RegisterInputDTO, UserRegister } from "../models/UserRegister";
 import { UserDatabase } from "../data/UserDatabase";
-import { CpfInputDTO } from "../model/UserCpf";
+import { CpfInputDTO } from "../models/UserCpf";
 
 export class UserBusiness {
     constructor(

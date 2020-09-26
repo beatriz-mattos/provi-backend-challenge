@@ -1,6 +1,6 @@
 import { BaseDatabase } from "./BaseDatabase";
-import { UserCpf } from './../model/UserCpf';
-import { UserRegister } from "../model/UserRegister";
+import { UserCpf } from '../models/UserCpf';
+import { UserRegister } from "../models/UserRegister";
 import { format } from "date-fns";
 
 export class UserDatabase extends BaseDatabase {

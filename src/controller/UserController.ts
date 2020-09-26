@@ -1,4 +1,4 @@
-import { RegisterInputDTO } from '../model/UserRegister';
+import { RegisterInputDTO } from '../models/UserRegister';
 import { Authenticator } from '../services/Authenticator';
 import { HashManager } from '../services/HashManager';
 import { IdGenerator } from '../services/IdGenerator';
@@ -6,7 +6,7 @@ import { BaseDatabase } from '../data/BaseDatabase';
 import { Request, Response } from "express";
 import { UserBusiness } from '../business/UserBusiness';
 import { UserDatabase } from '../data/UserDatabase';
-import { CpfInputDTO } from '../model/UserCpf';
+import { CpfInputDTO } from '../models/UserCpf';
 
 export class UserController {
     private static UserBusiness = new UserBusiness(

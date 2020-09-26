@@ -9,13 +9,13 @@ export class UserRegister {
     public getEmail = () => this.email;
     public getPassword = () => this.password;
 
-    public static toUserModel(userRegister?: any): UserRegister | undefined {
+    public static toUserModel(user?: any): UserRegister | undefined {
         return (
-            userRegister &&
+            user &&
             new UserRegister(
-                userRegister.id,
-                userRegister.email,
-                userRegister.password
+                user.id,
+                user.email,
+                user.password
             )
         );
     };

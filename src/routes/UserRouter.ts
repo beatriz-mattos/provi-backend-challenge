@@ -1,4 +1,4 @@
-import { UserCpf } from './../model/UserCpf';
+import { UserCpf } from '../models/UserCpf';
 import express from "express";
 import { UserController } from "../controller/UserController";
 
