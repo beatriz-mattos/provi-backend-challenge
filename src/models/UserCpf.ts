@@ -7,6 +7,10 @@ export class UserCpf {
     public getId = () => this.id;
     public getCpf = () => this.cpf;
 
+    public setCpf(cpf: string): void {
+        this.cpf = cpf;
+    };
+
     public static toCpfModel(user?: any): UserCpf | undefined {
         return (
             user &&

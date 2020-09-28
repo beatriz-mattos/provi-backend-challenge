@@ -6,6 +6,8 @@ import { format } from "date-fns";
 export class UserDatabase extends BaseDatabase {
   protected REGISTER_TABLE_NAME: string = "User_Register";
   protected CPF_TABLE_NAME: string = "User_Cpf";
+  protected PHONE_TABLE_NAME: string = "User_Phone";
+  protected ADDRESS_TABLE_NAME: string = "User_Address";
 
   public async createUser(user: UserRegister): Promise<void> {
     try {
@@ -77,12 +79,12 @@ export class UserDatabase extends BaseDatabase {
       await super.getConnection().raw(`
         UPDATE ${this.CPF_TABLE_NAME}
         SET updated_at = '${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}'
-        WHERE CPF = '${cpf}'
+        WHERE cpf = '${cpf}'
       `)
 
     } catch (err) {
       throw new Error(err.sqlMessage || err.message);
     }
   };
-  
+
 };

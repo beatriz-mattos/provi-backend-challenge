@@ -17,6 +17,14 @@ export class UserAddress {
     public getCity = () => this.city;
     public getState = () => this.state;
 
+    public setId = (id: string) => this.id = id;
+    public setCep = (cep: string) => this.cep = cep;
+    public setStreet = (street: string) => this.street = street;
+    public setNumber = (number: number) => this.number = number;
+    public setComplement = (complement: string) => this.complement = complement;
+    public setCity = (city: string) => this.city = city;
+    public setState = (state: string) => this.state = state;
+
     public static toAddressModel(user?: any): UserAddress | undefined {
         return(
             user &&

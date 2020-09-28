@@ -1,3 +1,4 @@
+import { UserCpf } from './../models/UserCpf';
 import { InvalidParameterError } from "../error/InvalidParameterError";
 import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
@@ -6,6 +7,7 @@ import { ConflictError } from '../error/ConflictError';
 import { RegisterInputDTO, UserRegister } from "../models/UserRegister";
 import { UserDatabase } from "../data/UserDatabase";
 import { CpfInputDTO } from "../models/UserCpf";
+import { NotFoundError } from "../error/NotFoundError";
 
 export class UserBusiness {
     constructor(
@@ -13,7 +15,7 @@ export class UserBusiness {
         private hashManager: HashManager,
         private authenticator: Authenticator,
         private idGenerator: IdGenerator
-    ) {};
+    ) { };
 
     public async register(input: RegisterInputDTO) {
 
@@ -38,7 +40,7 @@ export class UserBusiness {
         };
 
         const id = this.idGenerator.generate();
-        
+
         const cryptedPassword = await this.hashManager.hash(password);
 
         await this.userDatabase.createUser(
@@ -48,7 +50,31 @@ export class UserBusiness {
         const token = this.authenticator.generateToken({ id });
 
         return { token };
-        
+
+    };
+
+    public async login(input: RegisterInputDTO) {
+        const { email, password } = input;
+
+        if (!email || !password) {
+            throw new InvalidParameterError("Missing some input")
+        };
+
+        const user = await this.userDatabase.getUserByEmail(email);
+
+        if (!user) {
+            throw new NotFoundError("User not found")
+        };
+
+        const isPasswordCorrect = await this.hashManager.compare(password, user.getPassword());
+
+        if (!isPasswordCorrect) {
+            throw new InvalidParameterError("Invalid password")
+        };
+
+        const token = this.authenticator.generateToken({ id: user.getId() });
+
+        return { token };
     };
 
     public async addCpf(input: CpfInputDTO) {
@@ -59,12 +85,21 @@ export class UserBusiness {
         };
 
         //TO DO: inserir validação do cpf (isCpfValid)
-    
+
+        const userId = this.authenticator.getData(token);
         const cpfChecker = await this.userDatabase.findUserByCpf(cpf);
 
-        if(cpfChecker) {
+        if (!cpfChecker) {
+            const user = new UserCpf(userId.id, cpf);
+            user.setCpf(cpf);
+
+            await this.userDatabase.addCpf(user);
+        }
+        else {
             await this.userDatabase.updateCpf(cpf);
         };
     };
+
     
+
 };
