@@ -7,6 +7,10 @@ export class UserBirthday {
     public getId = () => this.id;
     public getBirthDate = () => this.birth_date;
 
+    public setBirthDate(birth_date: string): void {
+        this.birth_date = birth_date;
+    };
+
     public static toBirthModel(user?: any): UserBirthday | undefined {
         return(
             user &&

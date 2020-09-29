@@ -1,3 +1,7 @@
+import { AddressInputDTO } from './../models/UserAddress';
+import { PhoneInputDTO, UserPhone } from './../models/UserPhone';
+import { BirthdayInputDTO, UserBirthday } from './../models/UserBirthday';
+import { NameInputDTO, UserName } from './../models/UserName';
 import { UserCpf } from './../models/UserCpf';
 import { InvalidParameterError } from "../error/InvalidParameterError";
 import { Authenticator } from "../services/Authenticator";
@@ -8,6 +12,8 @@ import { RegisterInputDTO, UserRegister } from "../models/UserRegister";
 import { UserDatabase } from "../data/UserDatabase";
 import { CpfInputDTO } from "../models/UserCpf";
 import { NotFoundError } from "../error/NotFoundError";
+import { validate } from 'gerador-validador-cpf';
+import { GenericError } from '../error/GenericError';
 
 export class UserBusiness {
     constructor(
@@ -84,7 +90,9 @@ export class UserBusiness {
             throw new InvalidParameterError("Missing some input")
         };
 
-        //TO DO: inserir validação do cpf (isCpfValid)
+        if (!validate(cpf)) {
+            throw new GenericError("Invalid CPF")
+        };
 
         const userId = this.authenticator.getData(token);
         const cpfChecker = await this.userDatabase.findUserByCpf(cpf);
@@ -100,6 +108,93 @@ export class UserBusiness {
         };
     };
 
-    
+    // public async addFullName(input: NameInputDTO) {
+    //     const { token, full_name } = input;
+
+    //     if (!token || !full_name) {
+    //         throw new InvalidParameterError("Missing some input")
+    //     };
+
+    //     const userId = this.authenticator.getData(token);
+    //     const newName = new UserName(userId.id, full_name);
+    //     const fullNameChecker = await this.userDatabase.findUserByFullName(newName);
+
+    //     if (!fullNameChecker) {
+    //         const user = new UserName(userId.id, full_name);
+    //         user.setFullName(full_name);
+
+    //         await this.userDatabase.addFullName(user);
+    //     }
+    //     else {
+    //         await this.userDatabase.updateFullName(newName);
+    //     }
+    // };
+
+    public async addBirthDate(input: BirthdayInputDTO) {
+        const { token, birth_date } = input;
+
+        if (!token || !birth_date) {
+            throw new InvalidParameterError("Missing some input")
+        };
+
+        const userId = this.authenticator.getData(token);
+        const birthChecker = await this.userDatabase.findUserByBirthDate(birth_date);
+
+        if (!birthChecker) {
+            const user = new UserBirthday(userId.id, birth_date);
+            user.setBirthDate(birth_date);
+
+            await this.userDatabase.addBirthDate(user);
+        }
+        else {
+            await this.userDatabase.updateBirthDate(birth_date);
+        };
+    };
+
+    // public async addPhoneNumber(input: PhoneInputDTO) {
+    //     const { token, phone_number } = input;
+
+    //     if (!token || !phone_number) {
+    //         throw new InvalidParameterError("Missing some input")
+    //     };
+
+    //     const userId = this.authenticator.getData(token);
+    //     const phoneChecker = await this.userDatabase.findUserByPhoneNumber(phone_number);
+
+    //     if (!phoneChecker) {
+    //         const user = new UserPhone(userId.id, phone_number);
+    //         user.setPhoneNumber(phone_number);
+
+    //         await this.userDatabase.addPhoneNumber(user);
+    //     }
+    //     else {
+    //         await this.userDatabase.updatePhoneNumber(phone_number);
+    //     };
+    // };
+
+    // public async addAddress(input: AddressInputDTO) {
+    //     const { token, cep, street, number, complement, city, state} = input;
+
+    //     if (!token || !cep || !street || !number || !complement || !city || !state) {
+    //         throw new InvalidParameterError("Missing some input")
+    //     };
+
+    //     if (cep.length > 8) {
+    //         throw new GenericError("Invalid CEP")
+    //     };
+
+    //     const userId = this.authenticator.getData(token);
+    //     // const addressChecker = await this.userDatabase.findUserByAddress(input);
+
+    //     // if (!addressChecker) {
+    //     //     const user = new UserAddress(userId.id, ?);
+    //     //     user.setAdress(?);
+
+    //     //     await this.userDatabase.addAddress(user);
+    //     // }
+    //     // else {
+    //     //     await this.userDatabase.updateAddress(?);
+    //     // };
+    // };
 
 };

@@ -7,6 +7,10 @@ export class UserPhone {
     public getId = () => this.id;
     public getPhoneNumber = () => this.phone_number;
 
+    public setPhoneNumber(phone_number: number): void {
+        this.phone_number = phone_number;
+    };
+
     public static toPhoneModel(user?: any): UserPhone | undefined {
         return (
             user &&
