@@ -151,26 +151,26 @@ export class UserBusiness {
         };
     };
 
-    // public async addPhoneNumber(input: PhoneInputDTO) {
-    //     const { token, phone_number } = input;
+    public async addPhoneNumber(input: PhoneInputDTO) {
+        const { token, phone_number } = input;
 
-    //     if (!token || !phone_number) {
-    //         throw new InvalidParameterError("Missing some input")
-    //     };
+        if (!token || !phone_number) {
+            throw new InvalidParameterError("Missing some input")
+        };
 
-    //     const userId = this.authenticator.getData(token);
-    //     const phoneChecker = await this.userDatabase.findUserByPhoneNumber(phone_number);
+        const userId = this.authenticator.getData(token);
+        const phoneChecker = await this.userDatabase.findUserByPhoneNumber(phone_number);
 
-    //     if (!phoneChecker) {
-    //         const user = new UserPhone(userId.id, phone_number);
-    //         user.setPhoneNumber(phone_number);
+        if (!phoneChecker) {
+            const user = new UserPhone(userId.id, phone_number);
+            user.setPhoneNumber(phone_number);
 
-    //         await this.userDatabase.addPhoneNumber(user);
-    //     }
-    //     else {
-    //         await this.userDatabase.updatePhoneNumber(phone_number);
-    //     };
-    // };
+            await this.userDatabase.addPhoneNumber(user);
+        }
+        else {
+            await this.userDatabase.updatePhoneNumber(phone_number);
+        };
+    };
 
     // public async addAddress(input: AddressInputDTO) {
     //     const { token, cep, street, number, complement, city, state} = input;

@@ -100,21 +100,21 @@ export class UserController {
         };
     };
 
-    // async addPhoneNumber(req: Request, res: Response) {
-    //     try {
+    async addPhoneNumber(req: Request, res: Response) {
+        try {
 
-    //         const { token, phone_number } = req.body;
-    //         const input: PhoneInputDTO = { token, phone_number };
-    //         const response = await UserController.UserBusiness.addPhoneNumber(input);
+            const { token, phone_number } = req.body;
+            const input: PhoneInputDTO = { token, phone_number };
+            const response = await UserController.UserBusiness.addPhoneNumber(input);
 
-    //         res.status(200).send(response);
+            res.status(200).send(response);
 
-    //     } catch (err) {
-    //         res.status(err.code || 400).send({ message: err.message })
-    //     };
-
-    //     await BaseDatabase.destroyConnection();
-    // };
+        } catch (err) {
+            res.status(err.code || 400).send({ message: err.message })
+        } finally {
+            await BaseDatabase.destroyConnection();
+        };
+    };
 
     // async addAddress(req: Request, res: Response) {
     //     try {

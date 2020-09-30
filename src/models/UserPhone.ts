@@ -1,13 +1,13 @@
 export class UserPhone {
     constructor(
         private id: string,
-        private phone_number: number
+        private phone_number: string
     ) {};
 
     public getId = () => this.id;
     public getPhoneNumber = () => this.phone_number;
 
-    public setPhoneNumber(phone_number: number): void {
+    public setPhoneNumber(phone_number: string): void {
         this.phone_number = phone_number;
     };
 
@@ -24,5 +24,5 @@ export class UserPhone {
 
 export interface PhoneInputDTO {
     token?: string,
-    phone_number: number
+    phone_number: string
 };

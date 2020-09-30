@@ -186,50 +186,50 @@ export class UserDatabase extends BaseDatabase {
     }
   };
 
-  // public async addPhoneNumber(user: UserPhone): Promise<void> {
-  //   try {
+  public async addPhoneNumber(user: UserPhone): Promise<void> {
+    try {
 
-  //     await super.getConnection().raw(`
-  //       INSERT INTO ${this.PHONE_TABLE_NAME} (phone_number, user_id, updated_at)
-  //       VALUES (
-  //         '${user.getPhoneNumber()}', 
-  //         '${user.getId()}',
-  //         '${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}' 
-  //       )
-  //     `);
+      await super.getConnection().raw(`
+        INSERT INTO ${this.PHONE_TABLE_NAME} (phone_number, user_id, updated_at)
+        VALUES (
+          '${user.getPhoneNumber()}', 
+          '${user.getId()}',
+          '${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}' 
+        )
+      `);
 
-  //   } catch (err) {
-  //     throw new Error(err.sqlMessage || err.message);
-  //   }
-  // };
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  };
 
-  // public async findUserByPhoneNumber(phone_number: number): Promise<UserPhone | undefined> {
-  //   try {
+  public async findUserByPhoneNumber(phone_number: string): Promise<UserPhone | undefined> {
+    try {
 
-  //     const response = await super.getConnection()
-  //       .select("*")
-  //       .from(this.PHONE_TABLE_NAME)
-  //       .where({ phone_number })
+      const response = await super.getConnection()
+        .select("*")
+        .from(this.PHONE_TABLE_NAME)
+        .where({ phone_number })
 
-  //     return UserPhone.toPhoneModel(response[0]);
+      return UserPhone.toPhoneModel(response[0]);
 
-  //   } catch (err) {
-  //     throw new Error(err.sqlMessage || err.message);
-  //   }
-  // };
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  };
 
-  // public async updatePhoneNumber(phone_number: number): Promise<void> {
-  //   try {
+  public async updatePhoneNumber(phone_number: string): Promise<void> {
+    try {
 
-  //     await super.getConnection().raw(`
-  //       UPDATE ${this.PHONE_TABLE_NAME}
-  //       SET updated_at = '${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}'
-  //       WHERE phone_number = '${phone_number}'
-  //     `)
+      await super.getConnection().raw(`
+        UPDATE ${this.PHONE_TABLE_NAME}
+        SET updated_at = '${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}'
+        WHERE phone_number = '${phone_number}'
+      `)
 
-  //   } catch (err) {
-  //     throw new Error(err.sqlMessage || err.message);
-  //   }
-  // };
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  };
 
 };

@@ -9,5 +9,5 @@ userRouter.post("/login", userController.login);
 userRouter.post("/cpf", userController.addCpf);
 //userRouter.post("/full-name", userController.addFullName);
 userRouter.post("/birthday", userController.addBirthDate);
-// userRouter.post("/phone", userController.addPhoneNumber);
+userRouter.post("/phone", userController.addPhoneNumber);
 //userRouter.post("/address", userController.addAddress);
