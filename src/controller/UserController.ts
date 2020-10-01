@@ -68,21 +68,23 @@ export class UserController {
         };
     };
 
-    // async addFullName(req: Request, res: Response) {
-    //     try {
+    async addFullName(req: Request, res: Response) {
+        try {
 
-    //         const { token, full_name } = req.body;
-    //         const input: NameInputDTO = { token, full_name };
-    //         const response = await UserController.UserBusiness.addFullName(input);
+            const { token, full_name } = req.body;
+            const input: NameInputDTO = { token, full_name };
+            // o problema pode estar abaixo, nesse input que guardei a dto em token e full name
+            //e o método addFullName da business precisa ser desestruturado por lá
+            const response = await UserController.UserBusiness.addFullName(input);
 
-    //         res.status(200).send(response);
+            res.status(200).send(response);
 
-    //     } catch (err) {
-    //         res.status(err.code || 400).send({ message: err.message })
-    //     } finally {
-    //         await BaseDatabase.destroyConnection();
-    //     };
-    // };
+        } catch (err) {
+            res.status(err.code || 400).send({ message: err.message })
+        } finally {
+            await BaseDatabase.destroyConnection();
+        };
+    };
 
     async addBirthDate(req: Request, res: Response) {
         try {
@@ -116,20 +118,20 @@ export class UserController {
         };
     };
 
-    // async addAddress(req: Request, res: Response) {
-    //     try {
+    async addAddress(req: Request, res: Response) {
+        try {
 
-    //         const { token, cep, street, number, complement, city, state } = req.body;
-    //         const input: AddressInputDTO = { token, cep, street, number, complement, city, state };
-    //         const response = await UserController.UserBusiness.addAddress(input);
+            const { token, cep, street, number, complement, city, state } = req.body;
+            const input: AddressInputDTO = { token, cep, street, number, complement, city, state };
+            const response = await UserController.UserBusiness.addAddress(input);
 
-    //         res.status(200).send(response);
+            res.status(200).send(response);
 
-    //     } catch (err) {
-    //         res.status(err.code || 400).send({ message: err.message })
-    //     };
-
-    //     await BaseDatabase.destroyConnection();
-    // };
+        } catch (err) {
+            res.status(err.code || 400).send({ message: err.message })
+        } finally {
+            await BaseDatabase.destroyConnection();
+        };
+    };
 
 };

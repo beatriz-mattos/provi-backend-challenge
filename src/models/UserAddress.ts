@@ -6,7 +6,8 @@ export class UserAddress {
         private number: number,
         private complement: string,
         private city: string,
-        private state: string
+        private state: string,
+        private user_id: string
     ) {};
 
     public getId = () => this.id;
@@ -16,6 +17,7 @@ export class UserAddress {
     public getComplement = () => this.complement;
     public getCity = () => this.city;
     public getState = () => this.state;
+    public getUserId = () => this.user_id;
 
     public setId = (id: string) => this.id = id;
     public setCep = (cep: string) => this.cep = cep;
@@ -32,10 +34,11 @@ export class UserAddress {
                 user.id,
                 user.cep,
                 user.street,
-                user.number,
+                Number(user.number),
                 user.complement,
                 user.city,
-                user.state
+                user.state,
+                user.user_id
             )
         )
     };

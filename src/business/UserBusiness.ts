@@ -39,7 +39,7 @@ export class UserBusiness {
             throw new InvalidParameterError("Your password must contain at least 8 characters")
         };
 
-        const checkDuplicateEntry = await this.userDatabase.getUserByEmail(email);
+        const checkDuplicateEntry = await this.userDatabase.findUserByEmail(email);
 
         if (checkDuplicateEntry) {
             throw new ConflictError("This user has already been registered");
@@ -66,7 +66,7 @@ export class UserBusiness {
             throw new InvalidParameterError("Missing some input")
         };
 
-        const user = await this.userDatabase.getUserByEmail(email);
+        const user = await this.userDatabase.findUserByEmail(email);
 
         if (!user) {
             throw new NotFoundError("User not found")
@@ -94,11 +94,12 @@ export class UserBusiness {
             throw new GenericError("Invalid CPF")
         };
 
+        const id = this.idGenerator.generate();
         const userId = this.authenticator.getData(token);
         const cpfChecker = await this.userDatabase.findUserByCpf(cpf);
 
         if (!cpfChecker) {
-            const user = new UserCpf(userId.id, cpf);
+            const user = new UserCpf(id, cpf, userId.id);
             user.setCpf(cpf);
 
             await this.userDatabase.addCpf(user);
@@ -108,27 +109,29 @@ export class UserBusiness {
         };
     };
 
-    // public async addFullName(input: NameInputDTO) {
-    //     const { token, full_name } = input;
+    public async addFullName(input: NameInputDTO) {
+        const { token, full_name } = input;
 
-    //     if (!token || !full_name) {
-    //         throw new InvalidParameterError("Missing some input")
-    //     };
+        if (!token || !full_name) {
+            throw new InvalidParameterError("Missing some input")
+        };
 
-    //     const userId = this.authenticator.getData(token);
-    //     const newName = new UserName(userId.id, full_name);
-    //     const fullNameChecker = await this.userDatabase.findUserByFullName(newName);
+        const id = this.idGenerator.generate();
+        const userId = this.authenticator.getData(token);
 
-    //     if (!fullNameChecker) {
-    //         const user = new UserName(userId.id, full_name);
-    //         user.setFullName(full_name);
+        const fullName = full_name.split(" ");
+        const firstName = fullName[0];
+        const lastName = fullName[fullName.length - 1];
+        const newName = new UserName(id, firstName, lastName, userId.id);
+        const fullNameChecker = await this.userDatabase.findUserByFullName(newName);
 
-    //         await this.userDatabase.addFullName(user);
-    //     }
-    //     else {
-    //         await this.userDatabase.updateFullName(newName);
-    //     }
-    // };
+        if (!fullNameChecker) {
+            await this.userDatabase.addFullName(newName);
+        }
+        else {
+            await this.userDatabase.updateFullName(newName, userId.id);
+        }
+    };
 
     public async addBirthDate(input: BirthdayInputDTO) {
         const { token, birth_date } = input;
@@ -137,11 +140,12 @@ export class UserBusiness {
             throw new InvalidParameterError("Missing some input")
         };
 
+        const id = this.idGenerator.generate();
         const userId = this.authenticator.getData(token);
         const birthChecker = await this.userDatabase.findUserByBirthDate(birth_date);
 
         if (!birthChecker) {
-            const user = new UserBirthday(userId.id, birth_date);
+            const user = new UserBirthday(id, birth_date, userId.id);
             user.setBirthDate(birth_date);
 
             await this.userDatabase.addBirthDate(user);
@@ -158,11 +162,12 @@ export class UserBusiness {
             throw new InvalidParameterError("Missing some input")
         };
 
+        const id = this.idGenerator.generate();
         const userId = this.authenticator.getData(token);
         const phoneChecker = await this.userDatabase.findUserByPhoneNumber(phone_number);
 
         if (!phoneChecker) {
-            const user = new UserPhone(userId.id, phone_number);
+            const user = new UserPhone(id, phone_number, userId.id);
             user.setPhoneNumber(phone_number);
 
             await this.userDatabase.addPhoneNumber(user);
@@ -172,29 +177,30 @@ export class UserBusiness {
         };
     };
 
-    // public async addAddress(input: AddressInputDTO) {
-    //     const { token, cep, street, number, complement, city, state} = input;
+    public async addAddress(input: AddressInputDTO) {
+        const { token, cep, street, number, complement, city, state } = input;
 
-    //     if (!token || !cep || !street || !number || !complement || !city || !state) {
-    //         throw new InvalidParameterError("Missing some input")
-    //     };
+        if (!token || !cep || !street || !number || !complement || !city || !state) {
+            throw new InvalidParameterError("Missing some input")
+        };
 
-    //     if (cep.length > 8) {
-    //         throw new GenericError("Invalid CEP")
-    //     };
+        if (cep.length > 8) {
+            throw new GenericError("Invalid CEP")
+        };
 
-    //     const userId = this.authenticator.getData(token);
-    //     // const addressChecker = await this.userDatabase.findUserByAddress(input);
+        const id = this.idGenerator.generate();
+        const userId = this.authenticator.getData(token);
+        // trocar por cep checker:
+        //const addressChecker = await this.userDatabase.findUserByAddress(input);
 
-    //     // if (!addressChecker) {
-    //     //     const user = new UserAddress(userId.id, ?);
-    //     //     user.setAdress(?);
+        // if (!addressChecker) {
+        //     const user = new UserAddress(id, ??, userId.id);
+        //     user.setAdress(?);
 
-    //     //     await this.userDatabase.addAddress(user);
-    //     // }
-    //     // else {
-    //     //     await this.userDatabase.updateAddress(?);
-    //     // };
-    // };
-
+        //     await this.userDatabase.addAddress(user);
+        // }
+        // else {
+        //     await this.userDatabase.updateAddress(?);
+        // };
+    };
 };
