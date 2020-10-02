@@ -30,7 +30,7 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 - Knex;
 - MySQL;
 - Ts-node-dev;
-- 100.0% Typescript;
+- Typescript;
 - Uuid
     
 ## Lib utilizada para validar o CPF
