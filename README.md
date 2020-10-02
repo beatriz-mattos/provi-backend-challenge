@@ -3,12 +3,12 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 Foi criado um sistema de form guiado, onde os usuários preenchem suas informações pessoais para solicitar um empréstimo.
 
 ## Execução
-1. Instale as dependências
+1. Instale as dependências com o comando
 ```npm install```
 
-2. Configure as variáveis de ambiente conforme mostrado no arquivo ```.env.example```
+2. Crie um arquivo ```.env``` e configure as variáveis de ambiente conforme mostrado no arquivo ```.env.example```
 
-3. Rode o servidor utilizando ```npm run start```
+3. Rode o servidor utilizando o comando ```npm run start```
 
 4. 
 
