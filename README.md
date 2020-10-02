@@ -14,7 +14,7 @@ https://documenter.getpostman.com/view/11226481/TVReeB49
 - Knex;
 - MySQL;
 - Ts-node-dev;
-- 100% Typescript;
+- 100.0% Typescript;
 - Uuid
     
 ## Para validar o CPF...
