@@ -11,7 +11,7 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 
 3. Crie um arquivo ```.env``` e configure as variáveis de ambiente conforme mostrado no arquivo ```.env.example```, com as configurações do seu banco de dados;
 
-4. Inicie o servidor utilizando o comando ```npm run start```;
+4. Inicie o servidor local utilizando o comando ```npm run start```;
 
 5. Crie as tabelas em seu banco de dados, conforme mostrado no arquivo ```tables_db.sql```
 
