@@ -13,7 +13,7 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 
 4. Inicie o servidor utilizando o comando ```npm run start```;
 
-5. Crie as tabelas em seu banco de dados, conforme mostrado no arquivo ```scripts.sql```
+5. Crie as tabelas em seu banco de dados, conforme mostrado no arquivo ```tables_db.sql```
 
 ## Documentação completa:
 - https://documenter.getpostman.com/view/11226481/TVReeB49
