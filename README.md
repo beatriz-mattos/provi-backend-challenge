@@ -1,7 +1,8 @@
 # Provi backend challenge
-Challenge desenvolvido com NodeJS + Express para a empresa Provi.
+Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
+Foi criado um sistema de form guiado, onde os usuários preenchem suas informações pessoais para solicitar um empréstimo.
 
-## Documentação:
+## Documentação completa:
 https://documenter.getpostman.com/view/11226481/TVReeB49
 
 ## Stack utilizada:
