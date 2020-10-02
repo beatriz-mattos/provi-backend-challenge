@@ -1,3 +1,5 @@
+-- queries utilizadas no mySQL
+
 CREATE TABLE IF NOT EXISTS User_Register(
     id VARCHAR(255) PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
