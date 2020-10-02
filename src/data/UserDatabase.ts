@@ -145,9 +145,9 @@ export class UserDatabase extends BaseDatabase {
     try {
 
       const response = await super.getConnection()
-      .select("*")
-      .from(this.NAME_TABLE)
-      .where({ user_id: id })
+        .select("*")
+        .from(this.NAME_TABLE)
+        .where({ user_id: id })
 
       return UserName.toNameModel(response[0])
 
@@ -250,59 +250,57 @@ export class UserDatabase extends BaseDatabase {
     }
   };
 
-  public async addAddress(user: UserAddress): Promise<void> {
+  public async addAddress(address: UserAddress): Promise<void> {
     try {
 
-      await super.getConnection().raw(`
-        INSERT INTO ${this.ADDRESS_TABLE} (id, cep, street, number, complement, city, state, user_id, updated_at)
-        VALUES (
-          '${user.getId()}',
-          '${user.getCep()}',
-          '${user.getStreet()}',
-          '${user.getNumber()}',
-          '${user.getComplement()}',
-          '${user.getCity()}',
-          '${user.getState()}',
-          '${user.getUserId()}',
-          '${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}' 
-        )
-      `);
+      await super.getConnection()
+        .insert({
+          id: address.getId(),
+          cep: address.getCep(),
+          street: address.getStreet(),
+          number: address.getNumber(),
+          complement: address.getComplement(),
+          city: address.getCity(),
+          state: address.getState(),
+          user_id: address.getUserId(),
+          updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+        })
+        .into(this.ADDRESS_TABLE)
 
     } catch (err) {
       throw new Error(err.sqlMessage || err.message);
     }
   };
 
-  // public async findUserByAddress(address: UserAddress): Promise<UserAddress | undefined> {
-  //   try {
-
-  //     const response = await super.getConnection()
-  //     .select("*")
-  //     .from(this.ADDRESS_TABLE)
-  //     .where({
-  //       cep: address.getCep(),
-  //       street: address.getStreet(),
-  //       number: address.getNumber(),
-  //       complement: address.getComplement(),
-  //       city: address.getCity(),
-  //       state: address.getState(),
-  //     })
-
-  //     //return UserPhone.toPhoneModel(response[0]);
-
-  //   } catch (err) {
-  //     throw new Error(err.sqlMessage || err.message);
-  //   }
-  // };
-
-  public async updateAddress(addressId: string): Promise<void> {
+  public async findUserByAddress(address: UserAddress): Promise<UserAddress | undefined> {
     try {
 
-      await super.getConnection().raw(`
-        UPDATE ${this.ADDRESS_TABLE}
-        SET updated_at = '${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}'
-        WHERE id = '${addressId}'
-      `)
+      const response = await super.getConnection()
+      .select("*")
+      .from(this.ADDRESS_TABLE)
+      .where({
+        cep: address.getCep(),
+        street: address.getStreet(),
+        number: address.getNumber(),
+        complement: address.getComplement(),
+        city: address.getCity(),
+        state: address.getState(),
+      })
+
+      return UserAddress.toAddressModel(response[0]);
+
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  };
+
+  public async updateAddress(address: UserAddress, addressId: string): Promise<void> {
+    try {
+
+      await super.getConnection()
+        .update({ updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss') })
+        .into(this.ADDRESS_TABLE)
+        .where({ id: addressId })
 
     } catch (err) {
       throw new Error(err.sqlMessage || err.message);

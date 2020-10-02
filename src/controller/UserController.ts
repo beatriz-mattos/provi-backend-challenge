@@ -11,13 +11,15 @@ import { UserBusiness } from '../business/UserBusiness';
 import { UserDatabase } from '../data/UserDatabase';
 import { CpfInputDTO } from '../models/UserCpf';
 import { NameInputDTO } from '../models/UserName';
+import { CepAPI } from '../services/CepAPI';
 
 export class UserController {
     private static UserBusiness = new UserBusiness(
         new UserDatabase(),
         new HashManager(),
         new Authenticator(),
-        new IdGenerator()
+        new IdGenerator(),
+        new CepAPI()
     );
 
     async register(req: Request, res: Response) {
@@ -73,8 +75,6 @@ export class UserController {
 
             const { token, full_name } = req.body;
             const input: NameInputDTO = { token, full_name };
-            // o problema pode estar abaixo, nesse input que guardei a dto em token e full name
-            //e o método addFullName da business precisa ser desestruturado por lá
             const response = await UserController.UserBusiness.addFullName(input);
 
             res.status(200).send(response);

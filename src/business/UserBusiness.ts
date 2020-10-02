@@ -1,4 +1,5 @@
-import { AddressInputDTO } from './../models/UserAddress';
+import { CepAPI } from './../services/CepAPI';
+import { AddressInputDTO, UserAddress } from './../models/UserAddress';
 import { PhoneInputDTO, UserPhone } from './../models/UserPhone';
 import { BirthdayInputDTO, UserBirthday } from './../models/UserBirthday';
 import { NameInputDTO, UserName } from './../models/UserName';
@@ -20,8 +21,9 @@ export class UserBusiness {
         private userDatabase: UserDatabase,
         private hashManager: HashManager,
         private authenticator: Authenticator,
-        private idGenerator: IdGenerator
-    ) { };
+        private idGenerator: IdGenerator,
+        private CepAPI: CepAPI
+    ) {};
 
     public async register(input: RegisterInputDTO) {
 
@@ -176,7 +178,6 @@ export class UserBusiness {
             await this.userDatabase.updatePhoneNumber(phone_number);
         };
     };
-
     public async addAddress(input: AddressInputDTO) {
         const { token, cep, street, number, complement, city, state } = input;
 
@@ -184,23 +185,45 @@ export class UserBusiness {
             throw new InvalidParameterError("Missing some input")
         };
 
-        if (cep.length > 8) {
+        const id = this.idGenerator.generate();
+        const userId = this.authenticator.getData(token);
+        const newAddress = new UserAddress(id, cep, street, number, complement, city, state, userId.id);
+        const response = await this.CepAPI.cepChecker(newAddress.getCep());
+        const addressChecker = await this.userDatabase.findUserByAddress(newAddress);
+        
+        if (cep.length < 8) {
             throw new GenericError("Invalid CEP")
         };
 
-        const id = this.idGenerator.generate();
-        const userId = this.authenticator.getData(token);
-        // trocar por cep checker:
-        //const addressChecker = await this.userDatabase.findUserByAddress(input);
+        if (response.erro) {
+            throw new NotFoundError("This CEP does not exist")
+        };
 
-        // if (!addressChecker) {
-        //     const user = new UserAddress(id, ??, userId.id);
-        //     user.setAdress(?);
+        if (response.logradouro != street) {
+            throw new GenericError("Invalid street")
+        };
 
-        //     await this.userDatabase.addAddress(user);
-        // }
-        // else {
-        //     await this.userDatabase.updateAddress(?);
-        // };
+        if (isNaN(number)) {
+            throw new InvalidParameterError("Invalid number")
+        };
+
+        if (response.localidade != city) {
+            throw new NotFoundError("Invalid city")
+        };
+
+        if (response.uf != state){
+            throw new NotFoundError("Invalid state")
+        };
+
+        if (state.length > 2) {
+            throw new GenericError("Invalid format")
+        };
+        
+        if (!addressChecker) {
+            await this.userDatabase.addAddress(newAddress);
+        }
+        else {
+            await this.userDatabase.updateAddress(newAddress, userId.id);
+        };
     };
 };

@@ -1,20 +1,29 @@
-// import axios from "axios";
+import axios from "axios";
+import { NotFoundError } from './../error/NotFoundError';
 
-// export class CepAPI {
-//     public async cepChecker(cep: string): Promise<CepData> {
-//         const response = await axios.get<CepData>(`https://viacep.com.br/ws/${cep}/json`);
-//         return response.data;
-//     };
-// };
+export class CepAPI {
+    public async cepChecker(cep: string): Promise<CepData> {
+        try {
 
-// interface CepData {
-//     cep: string;
-//     logradouro: string;
-//     complemento: string;
-//     bairro: string;
-//     localidade: string;
-//     uf: string;
-//     unidade: string;
-//     ibge: string;
-//     gia: string;
-// };
+            const response = await axios.get<CepData>(`https://viacep.com.br/ws/${cep}/json`);
+            return response.data;
+
+        }
+        finally {};
+    };
+    
+};
+
+interface CepData {
+    cep: string;
+    logradouro: string;
+    complemento: string;
+    bairro: string;
+    localidade: string;
+    uf: string;
+    ibge: string;
+    gia: string;
+    ddd: string;
+    siafi: string;
+    erro: boolean;
+};
