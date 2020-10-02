@@ -1,3 +1,4 @@
+import { AmountRequested } from './../models/AmountRequested';
 import { CepAPI } from './../services/CepAPI';
 import { AddressInputDTO, UserAddress } from './../models/UserAddress';
 import { PhoneInputDTO, UserPhone } from './../models/UserPhone';
@@ -15,6 +16,7 @@ import { CpfInputDTO } from "../models/UserCpf";
 import { NotFoundError } from "../error/NotFoundError";
 import { validate } from 'gerador-validador-cpf';
 import { GenericError } from '../error/GenericError';
+import { AmountRequestedDTO } from '../models/AmountRequested';
 
 export class UserBusiness {
     constructor(
@@ -178,6 +180,7 @@ export class UserBusiness {
             await this.userDatabase.updatePhoneNumber(phone_number);
         };
     };
+
     public async addAddress(input: AddressInputDTO) {
         const { token, cep, street, number, complement, city, state } = input;
 
@@ -190,7 +193,7 @@ export class UserBusiness {
         const newAddress = new UserAddress(id, cep, street, number, complement, city, state, userId.id);
         const response = await this.CepAPI.cepChecker(newAddress.getCep());
         const addressChecker = await this.userDatabase.findUserByAddress(newAddress);
-        
+
         if (cep.length < 8) {
             throw new GenericError("Invalid CEP")
         };
@@ -211,19 +214,43 @@ export class UserBusiness {
             throw new NotFoundError("Invalid city")
         };
 
-        if (response.uf != state){
+        if (response.uf != state) {
             throw new NotFoundError("Invalid state")
         };
 
         if (state.length > 2) {
             throw new GenericError("Invalid format")
         };
-        
+
         if (!addressChecker) {
             await this.userDatabase.addAddress(newAddress);
         }
         else {
             await this.userDatabase.updateAddress(newAddress, userId.id);
+        };
+    };
+
+    public async addAmountRequested(input: AmountRequestedDTO) {
+        const { token, amount_requested } = input;
+
+        if (!token || !amount_requested) {
+            throw new InvalidParameterError("Missing some input")
+        };
+
+        if (isNaN(amount_requested)) {
+            throw new InvalidParameterError("Valor solicitado inválido")
+        };
+
+        const id = this.idGenerator.generate();
+        const userId = this.authenticator.getData(token);
+        const newAmount = new AmountRequested(id, amount_requested, userId.id);
+        const amountChecker = await this.userDatabase.findUserByAmount(newAmount);
+
+        if (!amountChecker) {
+            await this.userDatabase.addAmount(newAmount);
+        }
+        else {
+            await this.userDatabase.updateAmount(newAmount, userId.id);
         };
     };
 };

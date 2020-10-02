@@ -12,6 +12,7 @@ import { UserDatabase } from '../data/UserDatabase';
 import { CpfInputDTO } from '../models/UserCpf';
 import { NameInputDTO } from '../models/UserName';
 import { CepAPI } from '../services/CepAPI';
+import { AmountRequestedDTO } from '../models/AmountRequested';
 
 export class UserController {
     private static UserBusiness = new UserBusiness(
@@ -129,6 +130,22 @@ export class UserController {
 
         } catch (err) {
             res.status(err.code || 400).send({ message: err.message })
+        } finally {
+            await BaseDatabase.destroyConnection();
+        };
+    };
+
+    async addAmountRequested(req: Request, res: Response) {
+        try {
+
+            const { token, amount_requested } = req.body;
+            const input: AmountRequestedDTO = { token, amount_requested };
+            const response = await UserController.UserBusiness.addAmountRequested(input);
+
+            res.status(200).send(response);
+
+        } catch (err) {
+            res.status(err.code || 400).send({ message: err.message });
         } finally {
             await BaseDatabase.destroyConnection();
         };

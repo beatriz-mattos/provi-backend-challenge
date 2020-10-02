@@ -1,3 +1,4 @@
+import { AmountRequested } from '../models/AmountRequested';
 import { UserAddress } from './../models/UserAddress';
 import { UserPhone } from './../models/UserPhone';
 import { UserBirthday } from './../models/UserBirthday';
@@ -14,6 +15,7 @@ export class UserDatabase extends BaseDatabase {
   protected BIRTHDAY_TABLE: string = "User_Birthday";
   protected PHONE_TABLE: string = "User_Phone";
   protected ADDRESS_TABLE: string = "User_Address";
+  protected AMOUNT_TABLE: string = "Amount_Requested";
 
   public async createUser(user: UserRegister): Promise<void> {
     try {
@@ -276,16 +278,16 @@ export class UserDatabase extends BaseDatabase {
     try {
 
       const response = await super.getConnection()
-      .select("*")
-      .from(this.ADDRESS_TABLE)
-      .where({
-        cep: address.getCep(),
-        street: address.getStreet(),
-        number: address.getNumber(),
-        complement: address.getComplement(),
-        city: address.getCity(),
-        state: address.getState(),
-      })
+        .select("*")
+        .from(this.ADDRESS_TABLE)
+        .where({
+          cep: address.getCep(),
+          street: address.getStreet(),
+          number: address.getNumber(),
+          complement: address.getComplement(),
+          city: address.getCity(),
+          state: address.getState(),
+        })
 
       return UserAddress.toAddressModel(response[0]);
 
@@ -301,6 +303,51 @@ export class UserDatabase extends BaseDatabase {
         .update({ updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss') })
         .into(this.ADDRESS_TABLE)
         .where({ id: addressId })
+
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  };
+
+  public async addAmount(amount: AmountRequested): Promise<void> {
+    try {
+
+      await super.getConnection()
+        .insert({
+          id: amount.getId(),
+          amount_requested: amount.getAmountRequested(),
+          user_id: amount.getUserId(),
+          updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+        })
+        .into(this.AMOUNT_TABLE)
+
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  };
+
+  public async findUserByAmount(amount: AmountRequested): Promise<AmountRequested | undefined> {
+    try {
+
+      const response = await super.getConnection()
+      .select("*")
+      .from(this.AMOUNT_TABLE)
+      .where({ amount_requested: amount.getAmountRequested() })
+      
+      return AmountRequested.toAmountModel(response[0]);
+
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  };
+
+  public async updateAmount(amount: AmountRequested, amountId: string): Promise<void> {
+    try {
+
+      await super.getConnection()
+        .update({ updated_at: format(new Date(), 'yyyy-MM-dd HH:mm:ss') })
+        .into(this.AMOUNT_TABLE)
+        .where({ id: amountId })
 
     } catch (err) {
       throw new Error(err.sqlMessage || err.message);
