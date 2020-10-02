@@ -4,7 +4,7 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 - Sistema: Form guiado, onde os usuários preenchem suas informações pessoais para solicitar um empréstimo.
 
 ## Execução
-1. Baixe o arquivo .zip ou clone o repositório em seu terminal;
+1. Baixe o arquivo .zip ou clone este repositório em seu terminal;
 
 2. Instale as dependências com o comando
 ```npm install```;
