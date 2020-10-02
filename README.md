@@ -14,7 +14,7 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 4. 
 
 ## Documentação completa:
-https://documenter.getpostman.com/view/11226481/TVReeB49
+- https://documenter.getpostman.com/view/11226481/TVReeB49
 
 ## Stack utilizada:
 - Axios;
