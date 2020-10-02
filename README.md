@@ -1,6 +1,7 @@
 # Provi backend challenge
 Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
-Foi criado um sistema de form guiado, onde os usuários preenchem suas informações pessoais para solicitar um empréstimo.
+
+- Sistema: Form guiado, onde os usuários preenchem suas informações pessoais para solicitar um empréstimo.
 
 ## Execução
 1. Instale as dependências com o comando
