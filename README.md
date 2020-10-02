@@ -32,5 +32,5 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 ## Lib utilizada para validar o CPF
 - gerador-validador-cpf: https://tiagoporto.github.io/gerador-validador-cpf/
     
-## API utilizada ara validar o CEP
+## API utilizada para validar o CEP
 - Via Cep: https://github.com/viniciussanchez/viacep
