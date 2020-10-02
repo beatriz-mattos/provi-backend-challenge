@@ -4,19 +4,22 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 - Sistema: Form guiado, onde os usuários preenchem suas informações pessoais para solicitar um empréstimo.
 
 ## Execução
-1. Instale as dependências com o comando
-```npm install```
+1. Baixe o arquivo .zip ou clone o repositório em seu terminal;
 
-2. Crie um arquivo ```.env``` e configure as variáveis de ambiente conforme mostrado no arquivo ```.env.example```
+2. Instale as dependências com o comando
+```npm install```;
 
-3. Rode o servidor utilizando o comando ```npm run start```
+3. Crie um arquivo ```.env``` e configure as variáveis de ambiente conforme mostrado no arquivo ```.env.example```, com as configurações do seu banco de dados;
 
-4. 
+4. Inicie o servidor utilizando o comando ```npm run start```;
+
+5. Crie as tabelas em seu banco de dados, conforme mostrado no arquivo ```scripts.sql```
 
 ## Documentação completa:
 - https://documenter.getpostman.com/view/11226481/TVReeB49
 
 ## Stack utilizada:
+- Git;
 - Axios;
 - Bcryptjs;
 - Date-fns;
