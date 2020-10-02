@@ -17,8 +17,8 @@ https://documenter.getpostman.com/view/11226481/TVReeB49
 - 100% Typescript;
 - Uuid
     
-## Para validar o cpf, foi utilizada a seguinte lib
+## Para validar o CPF...
 - gerador-validador-cpf: https://tiagoporto.github.io/gerador-validador-cpf/
     
-## Para validar o CEP, foi utilizada a seguinte API
+## Para validar o CEP...
 - Via Cep: https://github.com/viniciussanchez/viacep
