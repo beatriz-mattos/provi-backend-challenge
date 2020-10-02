@@ -1,5 +1,4 @@
 import axios from "axios";
-import { NotFoundError } from './../error/NotFoundError';
 
 export class CepAPI {
     public async cepChecker(cep: string): Promise<CepData> {

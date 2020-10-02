@@ -1,4 +1,4 @@
-export class AmountRequested {
+export class UserAmountRequested {
     constructor(
         private id: string,
         private amount_requested: number,
@@ -9,10 +9,10 @@ export class AmountRequested {
     public getAmountRequested = () => this.amount_requested;
     public getUserId = () => this.user_id;
 
-    public static toAmountModel(amount?: any): AmountRequested | undefined {
+    public static toAmountModel(amount?: any): UserAmountRequested | undefined {
         return (
             amount &&
-            new AmountRequested(
+            new UserAmountRequested(
                 amount.id,
                 amount.amount_requested,
                 amount.user_id

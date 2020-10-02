@@ -1,4 +1,4 @@
-import { AmountRequested } from './../models/AmountRequested';
+import { UserAmountRequested } from '../models/UserAmountRequested';
 import { CepAPI } from './../services/CepAPI';
 import { AddressInputDTO, UserAddress } from './../models/UserAddress';
 import { PhoneInputDTO, UserPhone } from './../models/UserPhone';
@@ -16,7 +16,7 @@ import { CpfInputDTO } from "../models/UserCpf";
 import { NotFoundError } from "../error/NotFoundError";
 import { validate } from 'gerador-validador-cpf';
 import { GenericError } from '../error/GenericError';
-import { AmountRequestedDTO } from '../models/AmountRequested';
+import { AmountRequestedDTO } from '../models/UserAmountRequested';
 
 export class UserBusiness {
     constructor(
@@ -238,12 +238,12 @@ export class UserBusiness {
         };
 
         if (isNaN(amount_requested)) {
-            throw new InvalidParameterError("Valor solicitado inválido")
+            throw new InvalidParameterError("Invalid requested amount")
         };
 
         const id = this.idGenerator.generate();
         const userId = this.authenticator.getData(token);
-        const newAmount = new AmountRequested(id, amount_requested, userId.id);
+        const newAmount = new UserAmountRequested(id, amount_requested, userId.id);
         const amountChecker = await this.userDatabase.findUserByAmount(newAmount);
 
         if (!amountChecker) {

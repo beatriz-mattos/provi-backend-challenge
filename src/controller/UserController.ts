@@ -1,3 +1,4 @@
+import { FormStepsBusiness } from './../business/FormStepsBusiness';
 import { AddressInputDTO } from './../models/UserAddress';
 import { PhoneInputDTO } from './../models/UserPhone';
 import { BirthdayInputDTO } from './../models/UserBirthday';
@@ -12,7 +13,7 @@ import { UserDatabase } from '../data/UserDatabase';
 import { CpfInputDTO } from '../models/UserCpf';
 import { NameInputDTO } from '../models/UserName';
 import { CepAPI } from '../services/CepAPI';
-import { AmountRequestedDTO } from '../models/AmountRequested';
+import { AmountRequestedDTO } from '../models/UserAmountRequested';
 
 export class UserController {
     private static UserBusiness = new UserBusiness(
@@ -62,7 +63,7 @@ export class UserController {
             const input: CpfInputDTO = { token, cpf };
             const response = await UserController.UserBusiness.addCpf(input);
 
-            res.status(200).send(response);
+            res.status(200).send({ response, "Sucess": true, "next-end-point": "full-name" });
 
         } catch (err) {
             res.status(err.code || 400).send({ message: err.message })
@@ -78,7 +79,7 @@ export class UserController {
             const input: NameInputDTO = { token, full_name };
             const response = await UserController.UserBusiness.addFullName(input);
 
-            res.status(200).send(response);
+            res.status(200).send({ response, "Sucess": true, "next-end-point": "birthday" });
 
         } catch (err) {
             res.status(err.code || 400).send({ message: err.message })
@@ -94,7 +95,7 @@ export class UserController {
             const input: BirthdayInputDTO = { token, birth_date };
             const response = await UserController.UserBusiness.addBirthDate(input);
 
-            res.status(200).send(response);
+            res.status(200).send({ response, "Sucess": true, "next-end-point": "phone" });
 
         } catch (err) {
             res.status(err.code || 400).send({ message: err.message })
@@ -110,7 +111,7 @@ export class UserController {
             const input: PhoneInputDTO = { token, phone_number };
             const response = await UserController.UserBusiness.addPhoneNumber(input);
 
-            res.status(200).send(response);
+            res.status(200).send({ response, "Sucess": true, "next-end-point": "address" });
 
         } catch (err) {
             res.status(err.code || 400).send({ message: err.message })
@@ -126,7 +127,7 @@ export class UserController {
             const input: AddressInputDTO = { token, cep, street, number, complement, city, state };
             const response = await UserController.UserBusiness.addAddress(input);
 
-            res.status(200).send(response);
+            res.status(200).send({ response, "Sucess": true, "next-end-point": "amount-requested" });
 
         } catch (err) {
             res.status(err.code || 400).send({ message: err.message })
@@ -142,7 +143,7 @@ export class UserController {
             const input: AmountRequestedDTO = { token, amount_requested };
             const response = await UserController.UserBusiness.addAmountRequested(input);
 
-            res.status(200).send(response);
+            res.status(200).send({ response, "Sucess": true, "next-end-point": "next" });
 
         } catch (err) {
             res.status(err.code || 400).send({ message: err.message });
