@@ -24,6 +24,7 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 - Bcryptjs;
 - Date-fns;
 - Dotenv;
+- Node.js;
 - Express;
 - Jsonwebtoken;
 - Knex;
