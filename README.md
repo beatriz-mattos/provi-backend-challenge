@@ -15,10 +15,10 @@ Challenge desenvolvido com **NodeJS + Express** para a empresa Provi.
 
 5. Crie as tabelas no banco de dados, conforme mostrado no arquivo ```tables_db.sql```
 
-## Documentação completa:
+## Documentação completa
 - https://documenter.getpostman.com/view/11226481/TVReeB49
 
-## Stack utilizada:
+## Stack utilizada
 - Git;
 - Axios;
 - Bcryptjs;
